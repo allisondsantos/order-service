@@ -1,0 +1,81 @@
+<div class="container">{{ ProductId }}</div>
+
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5" id="editProduct">
+        Edit Product - {{ ProductId }}
+      </h1>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form #productForm="ngForm">
+        <div class="mb-3">
+          <label for="productName" class="form-label">Product Id</label>
+
+          <input
+            type="text"
+            readonly
+            class="form-control"
+            id="productId"
+            name="id"
+            [(ngModel)]="Product!.id"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="productName" class="form-label">Product Name</label>
+          <div class="d-grid gap-2 d-md-flex">
+            <input
+              type="text"
+              class="form-control"
+              id="productName"
+              name="name"
+              [(ngModel)]="Product!.name"
+              required
+              [disabled]="isInputProductNameDisabled"
+            />
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="editProductName()"
+            >
+              {{ isInputProductNameDisabled ? "Edit" : "Save" }}
+            </button>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="productPrice" class="form-label">Price</label>
+          <div class="d-grid gap-2 d-md-flex">
+            <input
+              type="number"
+              class="form-control"
+              id="productPrice"
+              name="price"
+              [(ngModel)]="Product!.price"
+              required
+              [disabled]="isInputProductPriceDisabled"
+            />
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="editProductPrice()"
+            >
+              {{ isInputProductPriceDisabled ? "Edit" : "Save" }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+        Ok
+      </button>
+    </div>
+  </div>
+</div>

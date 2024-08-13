@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  <div class="container d-grid gap-2 d-md-flex">
+    <h1>Products</h1>
+    <hr />
+  </div>
+  <div class="container">
+    <div class="container d-grid gap-2 d-md-flex justify-content-md-end">
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#newProduct"
+      >
+        + New Product
+      </button>
+      <!-- Create Modal -->
+      <div
+        class="modal fade"
+        id="newProduct"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="newProduct"
+        aria-hidden="true"
+      >
+        <app-create-modal></app-create-modal>
+      </div>
+    </div>
+  </div>
+  <div class="container d-grid gap-2 d-md-flex">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col"><p class="text-end">Actions</p></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let currentProduct of products">
+          <th scope="row">{{ currentProduct.id }}</th>
+          <td>{{ currentProduct.name }}</td>
+          <td>{{ currentProduct.price }}</td>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <div
+              class="editContainer"
+              [id]="'editContainer-' + currentProduct.id!"
+            >
+              <button
+                [id]="'button-' + currentProduct.id!"
+                type="button"
+                class="btn btn-primary btn-sm"
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="'#editProduct-' + currentProduct.id!"
+              >
+                Edit
+              </button>
+              <!-- Edit Modal -->
+              <div
+                class="modal fade"
+                [id]="'editProduct-' + currentProduct.id!"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                [attr.aria-labelledby]="'editProduct-' + currentProduct.id!"
+                aria-hidden="true"
+              >
+                <app-edit-modal
+                  [attr.id]="currentProduct.id!"
+                  [ProductId]="currentProduct.id!"
+                  [Product]="currentProduct"
+                ></app-edit-modal>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="removeProduct(product.id!)"
+            >
+              Remove
+            </button>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

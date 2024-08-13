@@ -1,0 +1,90 @@
+<div class="container-fluid">
+  <div class="container d-grid gap-2 d-md-flex">
+    <h1>Orders</h1>
+    <hr />
+  </div>
+  <div class="container">
+    <div class="container d-grid gap-2 d-md-flex justify-content-md-end">
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#newProduct"
+      >
+        + New Order
+      </button>
+      <!-- Create Modal -->
+      <div
+        class="modal fade"
+        id="newProduct"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="newProduct"
+        aria-hidden="true"
+      >
+        <app-new-order-modal></app-new-order-modal>
+      </div>
+    </div>
+  </div>
+  <div class="container d-grid gap-2 d-md-flex">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Customer Name</th>
+          <th scope="col">Customer Email</th>
+          <th scope="col">Total Amount</th>
+          <th scope="col">Paid</th>
+          <th scope="col"><p class="text-end">Actions</p></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let currentOrder of orders">
+          <th scope="row">{{ currentOrder.id }}</th>
+          <td>{{ currentOrder.customerName }}</td>
+          <td>{{ currentOrder.customerEmail }}</td>
+          <td>{{ currentOrder.totalAmount }}</td>
+          <td>{{ currentOrder.paid ? "Yes" : "No" }}</td>
+          <td>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <div
+                class="editContainer"
+                [id]="'editContainer-' + currentOrder.id!"
+              >
+                <button
+                  [id]="'button-' + currentOrder.id!"
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                  data-bs-toggle="modal"
+                  [attr.data-bs-target]="'#editOrder-' + currentOrder.id!"
+                >
+                  Edit
+                </button>
+                <!-- Edit Modal -->
+                <div
+                  class="modal fade"
+                  [id]="'editOrder-' + currentOrder.id!"
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
+                  tabindex="-1"
+                  [attr.aria-labelledby]="'editOrder-' + currentOrder.id!"
+                  aria-hidden="true"
+                >
+                  <app-edit-order-modal></app-edit-order-modal>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                (click)="removeOrder(currentOrder.id!)"
+              >
+                Remove
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

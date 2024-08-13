@@ -1,0 +1,40 @@
+name: order-service
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+      - MSSQL_SA_PASSWORD=SqlServer2022!
+    ports:
+      - "1433:1433"
+    volumes:
+      - /temp
+    networks:
+      - order-service-network
+
+  backend:
+    image: order-api-backend:latest
+    container_name: order_service_backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=OrderService;User Id=sa;Password=SqlServer2022!;
+    ports:
+      - "7081:80"
+    depends_on:
+      - db
+    networks:
+      - order-service-network
+
+    frontend:
+      image: order-api-backend:latest
+      container_name: order_service_frontend
+      ports:
+        - "8000:80"
+      networks:
+        - order-service-network
+
+networks:
+  order-service-network:
+    driver: bridge
